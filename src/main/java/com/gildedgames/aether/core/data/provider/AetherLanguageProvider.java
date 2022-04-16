@@ -5,7 +5,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import java.util.function.Supplier;
@@ -68,10 +68,6 @@ public abstract class AetherLanguageProvider extends LanguageProvider
         add("aether." + key, name);
     }
 
-    public void addCommand(String key, String name) {
-        add("commands.aether." + key, name);
-    }
-
     public void addKeyInfo(String key, String name) {
         add("key.aether." + key, name);
     }
@@ -84,11 +80,15 @@ public abstract class AetherLanguageProvider extends LanguageProvider
         add("curios.modifiers." + key, name);
     }
 
-    public void addLore(Supplier<? extends ItemLike> key, String name) {
-        add("lore." + key.get().asItem().getDescriptionId(), name);
+    public void addItemLore(Supplier<? extends Item> key, String name) {
+        addLore(key.get().getDescriptionId().replace("item.", "").replace("aether.", ""), name);
     }
 
-    public void addProTip(String key, String name) {
-        add("aether.pro_tips.line.aether." + key, name);
+    public void addBlockLore(Supplier<? extends Block> key, String name) {
+        addLore(key.get().getDescriptionId().replace("block.", "").replace("aether.", ""), name);
+    }
+
+    public void addLore(String key, String name) {
+        add("lore.aether." + key, name);
     }
 }

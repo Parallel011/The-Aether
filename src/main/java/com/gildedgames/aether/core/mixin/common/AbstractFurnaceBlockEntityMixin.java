@@ -44,11 +44,7 @@ public class AbstractFurnaceBlockEntityMixin
                 itemStack2.grow(itemStack1.getCount());
             }
 
-            if (itemStack.hasContainerItem()) {
-                stacks.set(0, itemStack.getContainerItem());
-            } else {
-                itemStack.shrink(1);
-            }
+            itemStack.shrink(1);
             cir.setReturnValue(true);
         }
     }

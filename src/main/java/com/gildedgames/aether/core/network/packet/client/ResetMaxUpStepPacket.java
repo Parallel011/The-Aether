@@ -1,12 +1,13 @@
 package com.gildedgames.aether.core.network.packet.client;
 
-import com.gildedgames.aether.core.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class ResetMaxUpStepPacket extends AbstractAetherPacket {
+public class ResetMaxUpStepPacket extends AetherPacket
+{
     private final int entityID;
 
     public ResetMaxUpStepPacket(int entityID) {

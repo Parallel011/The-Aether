@@ -11,7 +11,8 @@ import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.CuriosApi;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
-public class AccessoryAbilityClientListener {
+public class AccessoryAbilityClientListener
+{
     @SubscribeEvent
     public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
         CuriosApi.getCuriosHelper().findFirstCurio(event.getPlayer(), AetherItems.INVISIBILITY_CLOAK.get()).ifPresent((slotResult) -> event.setCanceled(true));

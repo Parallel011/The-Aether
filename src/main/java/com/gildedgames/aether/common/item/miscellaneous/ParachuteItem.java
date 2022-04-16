@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.miscellaneous;
 
-import com.gildedgames.aether.common.entity.miscellaneous.Parachute;
+import com.gildedgames.aether.common.entity.miscellaneous.AbstractParachuteEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -15,9 +15,9 @@ import java.util.function.Supplier;
 
 public class ParachuteItem extends Item
 {
-    protected final Supplier<EntityType<Parachute>> parachuteEntity;
+    protected final Supplier<EntityType<?>> parachuteEntity;
 
-    public ParachuteItem(Supplier<EntityType<Parachute>> parachuteEntity, Properties properties) {
+    public ParachuteItem(Supplier<EntityType<?>> parachuteEntity, Properties properties) {
         super(properties);
         this.parachuteEntity = parachuteEntity;
     }
@@ -26,30 +26,27 @@ public class ParachuteItem extends Item
     public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
         if (!playerEntity.isOnGround() && !playerEntity.isInWater() && !playerEntity.isInLava() && !playerEntity.isShiftKeyDown()) {
-            Entity entity = this.getParachuteEntity().get().create(world);
-            if (entity instanceof Parachute parachute) {
-                parachute.setPos(playerEntity.getX(), playerEntity.getY() - 1.0D, playerEntity.getZ());
+            Entity entity = this.parachuteEntity.get().create(world);
+            if (entity instanceof AbstractParachuteEntity) {
+                AbstractParachuteEntity parachuteEntity = (AbstractParachuteEntity) entity;
+                parachuteEntity.setPos(playerEntity.getX(), playerEntity.getY() - 1.0D, playerEntity.getZ());
                 if (playerEntity.isPassenger()) {
-                    if (playerEntity.getVehicle() instanceof Parachute) {
+                    if (playerEntity.getVehicle() instanceof AbstractParachuteEntity) {
                         playerEntity.getVehicle().ejectPassengers();
                     } else {
                         return InteractionResultHolder.pass(itemstack);
                     }
                 }
                 if (!world.isClientSide) {
-                    world.addFreshEntity(parachute);
-                    playerEntity.startRiding(parachute);
+                    world.addFreshEntity(parachuteEntity);
+                    playerEntity.startRiding(parachuteEntity);
                     itemstack.hurtAndBreak(1, playerEntity, (p) -> p.broadcastBreakEvent(hand));
                 }
-                parachute.spawnExplosionParticle();
+                parachuteEntity.spawnExplosionParticle();
                 playerEntity.awardStat(Stats.ITEM_USED.get(this));
                 return InteractionResultHolder.sidedSuccess(itemstack, world.isClientSide());
             }
         }
         return InteractionResultHolder.pass(itemstack);
-    }
-
-    public Supplier<EntityType<Parachute>> getParachuteEntity() {
-        return this.parachuteEntity;
     }
 }

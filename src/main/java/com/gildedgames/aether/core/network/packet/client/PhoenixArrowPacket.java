@@ -1,13 +1,14 @@
 package com.gildedgames.aether.core.network.packet.client;
 
-import com.gildedgames.aether.core.capability.arrow.PhoenixArrow;
-import com.gildedgames.aether.core.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.core.capability.interfaces.IPhoenixArrow;
+import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class PhoenixArrowPacket extends AbstractAetherPacket {
+public class PhoenixArrowPacket extends AetherPacket
+{
     private final int entityID;
     private final boolean isPhoenix;
 
@@ -31,7 +32,7 @@ public class PhoenixArrowPacket extends AbstractAetherPacket {
     @Override
     public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().player.level.getEntity(this.entityID) instanceof AbstractArrow arrow) {
-            PhoenixArrow.get(arrow).ifPresent(phoenixArrow -> phoenixArrow.setPhoenixArrow(this.isPhoenix));
+            IPhoenixArrow.get(arrow).ifPresent(phoenixArrow -> phoenixArrow.setPhoenixArrow(this.isPhoenix));
         }
     }
 }

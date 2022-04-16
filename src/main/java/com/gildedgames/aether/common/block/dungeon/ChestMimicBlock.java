@@ -41,7 +41,7 @@ public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterlogge
 
 	public ChestMimicBlock(Properties properties) {
 		super(properties);
-		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE));
 	}
 
 	@Override

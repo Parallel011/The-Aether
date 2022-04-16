@@ -1,6 +1,5 @@
 {
   "type": "aether:repairing",
-  "group": "altar_gloves_repair",
   "ingredient": {
     "item": "aether:golden_gloves"
   },

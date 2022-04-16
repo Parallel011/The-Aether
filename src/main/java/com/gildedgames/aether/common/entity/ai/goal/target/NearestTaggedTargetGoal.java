@@ -1,7 +1,6 @@
 package com.gildedgames.aether.common.entity.ai.goal.target;
 
 import net.minecraft.tags.Tag;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -21,18 +20,18 @@ import java.util.function.Predicate;
  * rather than a specific entity.
  */
 public class NearestTaggedTargetGoal extends TargetGoal {
-    private final TagKey<EntityType<?>> targetTag;
+    private final Tag<EntityType<?>> targetTag;
     private final int randomInterval;
     @Nullable
     protected LivingEntity target;
     /** This filter is applied to the Entity search. Only matching entities will be targeted. */
     protected TargetingConditions targetConditions;
 
-    public NearestTaggedTargetGoal(Mob pMob, TagKey<EntityType<?>> pTargetTag, boolean pMustSee) {
+    public NearestTaggedTargetGoal(Mob pMob, Tag<EntityType<?>> pTargetTag, boolean pMustSee) {
         this(pMob, pTargetTag, pMustSee, null);
     }
 
-    public NearestTaggedTargetGoal(Mob pMob, TagKey<EntityType<?>> pTargetTag, boolean pMustSee, @Nullable Predicate<LivingEntity> pTargetPredicate) {
+    public NearestTaggedTargetGoal(Mob pMob, Tag<EntityType<?>> pTargetTag, boolean pMustSee, @Nullable Predicate<LivingEntity> pTargetPredicate) {
         super(pMob, pMustSee);
         this.targetTag = pTargetTag;
         this.randomInterval = reducedTickDelay(10);
@@ -60,7 +59,7 @@ public class NearestTaggedTargetGoal extends TargetGoal {
 
     protected void findTarget() {
         this.target = this.mob.level.getNearestEntity(this.mob.level.getEntities(EntityTypeTest.forClass(LivingEntity.class), this.getTargetSearchArea(this.getFollowDistance()),
-                (LivingEntity entity) -> entity.getType().is(this.targetTag)), this.targetConditions, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
+                (LivingEntity entity) -> targetTag.contains(entity.getType())), this.targetConditions, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
     }
 
     /**

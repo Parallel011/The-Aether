@@ -6,12 +6,14 @@
     ]
   },
   "criteria": {
-    "has_water_bucket": {
+    "has_minecraft:packed_ice": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "tag": "aether:freezable_buckets"
+            "items": [
+              "minecraft:packed_ice"
+            ]
           }
         ]
       }
@@ -25,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_water_bucket",
+      "has_minecraft:packed_ice",
       "has_the_recipe"
     ]
   ]

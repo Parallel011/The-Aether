@@ -1,7 +1,6 @@
 package com.gildedgames.aether.common.item.combat.loot;
 
 import com.gildedgames.aether.common.registry.AetherItemGroups;
-import com.gildedgames.aether.common.registry.AetherItemTiers;
 import com.gildedgames.aether.common.registry.AetherItems;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -13,7 +12,7 @@ import net.minecraft.world.item.Tiers;
 public class VampireBladeItem extends SwordItem
 {
     public VampireBladeItem() {
-        super(AetherItemTiers.VAMPIRE, 3, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
+        super(Tiers.DIAMOND, 4, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
     }
 
     @Override

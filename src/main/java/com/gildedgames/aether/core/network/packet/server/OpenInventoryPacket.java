@@ -7,9 +7,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 
-import com.gildedgames.aether.core.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 
-public class OpenInventoryPacket extends AbstractAetherPacket {
+public class OpenInventoryPacket extends AetherPacket
+{
     private final int playerID;
     private final ItemStack carryStack;
 

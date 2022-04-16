@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.item.combat;
 
-import com.gildedgames.aether.common.entity.projectile.dart.AbstractDart;
+import com.gildedgames.aether.common.entity.projectile.dart.AbstractDartEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -9,6 +9,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.function.Supplier;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class DartItem extends Item
 {
@@ -19,10 +21,10 @@ public class DartItem extends Item
         this.dartEntity = dartEntity;
     }
 
-    public AbstractDart createDart(Level world, LivingEntity shooter) {
+    public AbstractDartEntity createDart(Level world, LivingEntity shooter) {
         Entity entity = this.dartEntity.get().create(world);
-        if (entity instanceof AbstractDart) {
-            AbstractDart dartEntity = (AbstractDart) entity;
+        if (entity instanceof AbstractDartEntity) {
+            AbstractDartEntity dartEntity = (AbstractDartEntity) entity;
             dartEntity.setPos(shooter.getX(), shooter.getEyeY() - 0.1D, shooter.getZ());
             dartEntity.setOwner(shooter);
             return dartEntity;
@@ -31,10 +33,10 @@ public class DartItem extends Item
         }
     }
 
-    public AbstractDart createDart(Level world) {
+    public AbstractDartEntity createDart(Level world) {
         Entity entity = this.dartEntity.get().create(world);
-        if (entity instanceof AbstractDart) {
-            return (AbstractDart) entity;
+        if (entity instanceof AbstractDartEntity) {
+            return (AbstractDartEntity) entity;
         } else {
             return null;
         }

@@ -8,7 +8,6 @@ public class AetherConfig
 {
     public static class Common
     {
-        public final ConfigValue<Boolean> enable_bed_explosions;
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
         public final ConfigValue<Boolean> edible_ambrosium;
@@ -24,7 +23,7 @@ public class AetherConfig
         public final ConfigValue<Boolean> generate_holiday_tree_always;
         public final ConfigValue<Boolean> generate_holiday_tree_seasonally;
 
-        public final ConfigValue<Boolean> sun_altar_whitelist;
+        public final ConfigValue<Boolean> admin_sun_altar;
 
         public final ConfigValue<Boolean> disable_aether_portal;
         public final ConfigValue<Boolean> disable_falling_to_overworld;
@@ -32,9 +31,6 @@ public class AetherConfig
 
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("Gameplay");
-            enable_bed_explosions = builder
-                    .comment("Vanilla's beds will explode in the Aether")
-                    .define("Beds explode", false);
             start_with_portal = builder
                     .comment("On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with")
                     .define("Gives player Aether Portal Frame item", false);
@@ -82,9 +78,9 @@ public class AetherConfig
             builder.pop();
 
             builder.push("Multiplayer");
-            sun_altar_whitelist = builder
-                    .comment("Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server")
-                    .define("Only whitelisted users access Sun Altars", false);
+            admin_sun_altar = builder
+                    .comment("Makes it so that only the server admin or anyone with permission level 4 can use the Sun Altar on a server")
+                    .define("Only admins use Sun Altars", true);
             builder.pop();
 
             builder.push("Modpack");

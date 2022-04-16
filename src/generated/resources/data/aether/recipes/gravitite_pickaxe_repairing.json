@@ -1,6 +1,5 @@
 {
   "type": "aether:repairing",
-  "group": "altar_pickaxe_repair",
   "ingredient": {
     "item": "aether:gravitite_pickaxe"
   },

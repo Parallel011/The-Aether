@@ -1,6 +1,6 @@
 package com.gildedgames.aether.core.network.packet.server;
 
-import com.gildedgames.aether.core.network.AetherPacket.AbstractAetherPacket;
+import com.gildedgames.aether.core.network.IAetherPacket.AetherPacket;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -9,7 +9,8 @@ import net.minecraftforge.common.ForgeMod;
 
 import java.util.UUID;
 
-public class ExtendedAttackPacket extends AbstractAetherPacket {
+public class ExtendedAttackPacket extends AetherPacket
+{
     private final UUID playerUUID;
     private final int targetEntityID;
 
@@ -36,7 +37,7 @@ public class ExtendedAttackPacket extends AbstractAetherPacket {
             Entity target = playerEntity.level.getEntity(this.targetEntityID);
             if (serverPlayer != null && target != null) {
                 double reach = serverPlayer.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
-                if (serverPlayer.distanceToSqr(target) <= reach * reach) {
+                if (serverPlayer.distanceToSqr(target) < reach * reach) {
                     serverPlayer.attack(target);
                 }
             }

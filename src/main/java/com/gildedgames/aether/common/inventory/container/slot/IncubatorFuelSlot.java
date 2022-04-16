@@ -1,6 +1,6 @@
 package com.gildedgames.aether.common.inventory.container.slot;
 
-import com.gildedgames.aether.common.inventory.container.IncubatorMenu;
+import com.gildedgames.aether.common.inventory.container.IncubatorContainer;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -9,9 +9,9 @@ import javax.annotation.Nonnull;
 
 public class IncubatorFuelSlot extends Slot
 {
-	private final IncubatorMenu container;
+	private final IncubatorContainer container;
 	
-	public IncubatorFuelSlot(IncubatorMenu container, Container incubatorInventoryIn, int index, int xPosition, int yPosition) {
+	public IncubatorFuelSlot(IncubatorContainer container, Container incubatorInventoryIn, int index, int xPosition, int yPosition) {
 		super(incubatorInventoryIn, index, xPosition, yPosition);
 		this.container = container;
 	}

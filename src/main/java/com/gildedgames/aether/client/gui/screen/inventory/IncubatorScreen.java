@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.gui.screen.inventory;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.common.inventory.container.IncubatorMenu;
+import com.gildedgames.aether.common.inventory.container.IncubatorContainer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -13,11 +13,11 @@ import net.minecraft.network.chat.Component;
 
 import javax.annotation.Nonnull;
 
-public class IncubatorScreen extends AbstractContainerScreen<IncubatorMenu>
+public class IncubatorScreen extends AbstractContainerScreen<IncubatorContainer>
 {
 	private static final ResourceLocation INCUBATOR_GUI_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/container/incubator.png");
 	
-	public IncubatorScreen(IncubatorMenu container, Inventory inventory, Component name) {
+	public IncubatorScreen(IncubatorContainer container, Inventory inventory, Component name) {
 		super(container, inventory, name);
 	}
 

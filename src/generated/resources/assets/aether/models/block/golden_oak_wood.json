@@ -1,7 +1,6 @@
 {
-  "parent": "minecraft:block/cube_column",
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "side": "aether:block/natural/golden_oak_log",
-    "end": "aether:block/natural/golden_oak_log"
+    "all": "aether:block/natural/golden_oak_log"
   }
 }

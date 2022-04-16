@@ -9,7 +9,8 @@ import net.minecraft.world.entity.LivingEntity;
 
 import javax.annotation.Nonnull;
 
-public class GlovesModel extends HumanoidModel<LivingEntity> {
+public class GlovesModel extends HumanoidModel<LivingEntity>
+{
     public GlovesModel(ModelPart root) {
         super(root);
     }

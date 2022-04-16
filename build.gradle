@@ -12,6 +12,7 @@ buildscript {
             name 'Gradle'
             url "https://plugins.gradle.org/m2/"
         }
+
         maven {
             name 'Parchment'
             url 'https://maven.parchmentmc.org'

@@ -1,7 +1,6 @@
 package com.gildedgames.aether.common.item.combat.loot;
 
 import com.gildedgames.aether.common.registry.AetherItemGroups;
-import com.gildedgames.aether.common.registry.AetherItemTiers;
 import com.gildedgames.aether.common.registry.AetherItems;
 
 import com.gildedgames.aether.common.registry.AetherTags;
@@ -28,12 +27,12 @@ import net.minecraft.world.item.Tiers;
 public class PigSlayerItem extends SwordItem
 {
 	public PigSlayerItem() {
-		super(AetherItemTiers.PIG_SLAYER, 3, -2.4f, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
+		super(Tiers.IRON, 3, -2.4f, new Item.Properties().durability(200).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
 	}
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (target.getType().is(AetherTags.Entities.PIGS)) {
+		if (AetherTags.Entities.PIGS.contains(target.getType())) {
 			if (target.getHealth() > 0.0F) {
 				target.hurt(DamageSource.mobAttack(attacker), 9999);
 			}
@@ -68,7 +67,7 @@ public class PigSlayerItem extends SwordItem
 						ArrayList<ItemEntity> newDrops = new ArrayList<>(event.getDrops().size());
 						for (ItemEntity drop : event.getDrops()) {
 							ItemStack droppedStack = drop.getItem();
-							if (droppedStack.is(AetherTags.Items.PIG_DROPS)) {
+							if (droppedStack.getItem().getTags().contains(AetherTags.Items.PIG_DROPS.getName())) {
 								ItemEntity dropEntity = new ItemEntity(entity.level, drop.getX(), drop.getY(), drop.getZ(), droppedStack.copy());
 								dropEntity.setDefaultPickUpDelay();
 								newDrops.add(dropEntity);

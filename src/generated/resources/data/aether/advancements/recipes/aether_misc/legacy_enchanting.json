@@ -6,13 +6,13 @@
     ]
   },
   "criteria": {
-    "has_aether:music_disc_legacy": {
+    "has_minecraft:music_disc_cat": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:music_disc_legacy"
+              "minecraft:music_disc_cat"
             ]
           }
         ]
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_aether:music_disc_legacy",
+      "has_minecraft:music_disc_cat",
       "has_the_recipe"
     ]
   ]

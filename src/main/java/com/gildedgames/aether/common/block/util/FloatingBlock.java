@@ -1,22 +1,18 @@
 package com.gildedgames.aether.common.block.util;
 
-import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
-import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-
-import javax.annotation.Nonnull;
 import java.util.Random;
 
-public class FloatingBlock extends Block implements Floatable
+import com.gildedgames.aether.common.entity.block.FloatingBlockEntity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+
+import net.minecraft.world.level.block.state.BlockBehaviour;
+
+public class FloatingBlock extends Block
 {
 	private final boolean powered;
 	
@@ -26,32 +22,37 @@ public class FloatingBlock extends Block implements Floatable
 	}
 
 	@Override
-	public void onPlace(@Nonnull BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState oldState, boolean isMoving) {
-		super.onPlace(state, level, pos, oldState, isMoving);
-		level.scheduleTick(pos, this, this.getDelayAfterPlace());
+	public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+		super.onPlace(state, worldIn, pos, oldState, isMoving);
+		worldIn.scheduleTick(pos, this, this.getDelayAfterPlace());
 	}
 
-	@Nonnull
 	@Override
-	public BlockState updateShape(@Nonnull BlockState state, @Nonnull Direction facing, @Nonnull BlockState facingState, @Nonnull LevelAccessor level, @Nonnull BlockPos pos, @Nonnull BlockPos facingPos) {
-		level.scheduleTick(pos, this, this.getDelayAfterPlace());
-		return super.updateShape(state, facing, facingState, level, pos, facingPos);
-	}
-
-	public void tick(@Nonnull BlockState state, @Nonnull ServerLevel level, @Nonnull BlockPos pos, @Nonnull Random random) {
-		super.tick(state, level, pos, random);
-		if ((this.powered && level.hasNeighborSignal(pos)) || (!this.powered && isFree(level.getBlockState(pos.above())) && pos.getY() <= level.getMaxBuildHeight())) {
-			FloatingBlockEntity floatingBlockEntity = new FloatingBlockEntity(level, (double) pos.getX() + 0.5D, pos.getY(), (double) pos.getZ() + 0.5D, level.getBlockState(pos));
-			level.addFreshEntity(floatingBlockEntity);
+	public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+		super.tick(state, worldIn, pos, random);
+		if (this.powered) {
+			if (worldIn.hasNeighborSignal(pos)) {
+				this.floatBlock(worldIn, pos);
+			}
 		} else {
-			level.scheduleTick(pos, this, this.getDelayAfterPlace());
+			if (worldIn.isEmptyBlock(pos.above()) || FallingBlock.isFree(worldIn.getBlockState(pos.above()))) {
+				this.floatBlock(worldIn, pos);
+			}
+		}
+		//worldIn.getBlockTicks().scheduleTick(pos, this, 2); //TODO: Not sure what to do with this. Check FallingBlock.
+	}
+	
+	private void floatBlock(Level worldIn, BlockPos pos) {
+		if (!worldIn.isClientSide) {
+			FloatingBlockEntity floatingblockentity = new FloatingBlockEntity(worldIn, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, worldIn.getBlockState(pos));
+			worldIn.removeBlock(pos, false);
+			worldIn.addFreshEntity(floatingblockentity);
 		}
 	}
 
-	public static boolean isFree(BlockState state) {
-		Material material = state.getMaterial();
-		return state.isAir() || state.is(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable();
-	}
+	public void onLand(Level worldIn, BlockPos pos, BlockState blockState, BlockState blockState1, FloatingBlockEntity fallingBlockEntity) { }
+
+	public void onBroken(Level worldIn, BlockPos pos, FloatingBlockEntity fallingBlockEntity) { }
 
 	protected int getDelayAfterPlace() {
 		return 2;

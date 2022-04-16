@@ -57,7 +57,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 
 	public TreasureChestBlock(Properties properties, Supplier<BlockEntityType<? extends TreasureChestBlockEntity>> tileEntityTypeSupplier) {
 		super(properties, tileEntityTypeSupplier);
-		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE));
 	}
 
 	public TreasureChestBlock(Properties properties) {
